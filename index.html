@@ -16,21 +16,19 @@
     window.SpeechRecognition = window.webkitSpeechRecognition;
     const synthesis = new SpeechSynthesisUtterance();
 
+    // 日本語に設定
+    synthesis.lang = 'ja-JP';
+
     // 読み上げる関数
     function readText() {
       // 読み上げるテキストを設定
       let inputText= document.form.text.value;
       // 文字列を一文字ずつ取得
       textArray = inputText.split("");
-      // 一文字ずつ読み上げる
-      for (var i = 0; i < textArray.length; i++) {
-        // 文字の設定
-        var tempText =textArray[i];
-        // テキストをAPIに渡す
-        synthesis.text = tempText;
-        // 読みあげる
-        speechSynthesis.speak(synthesis);
-      }
+      // テキストをAPIに渡す
+      synthesis.text = textArray;
+      // 読みあげる
+      speechSynthesis.speak(synthesis);
     }
 
   </script>
