@@ -13,27 +13,25 @@
   <script type="text/javascript">
 
     // APIのインスタンス化
-  	window.SpeechRecognition = window.webkitSpeechRecognition;
-  	const synthesis = new SpeechSynthesisUtterance();
+    window.SpeechRecognition = window.webkitSpeechRecognition;
+    const synthesis = new SpeechSynthesisUtterance();
 
     function readText() {
       // 読み上げるテキストを設定
-    	const defaultInputText = document.form.text.value;
-    	let inputText= defaultInputText;
+      let inputText= document.form.text.value;
       // テキストをAPIに渡す
       synthesis.text = makeResponse(inputText);
-  		inputText= defaultInputText;
       // 読みあげる
-  		speechSynthesis.speak(synthesis);
+      speechSynthesis.speak(synthesis);
     }
 
-  	const makeResponse = (input) => {
-  		if (input.includes('規約')) {
-  			return 'きほどきさだ';
-  		} else {
-  			return input;
-  		}
-  	};
+    const makeResponse = (input) => {
+      if (input.includes('規約')) {
+        return 'きほどきさだ';
+      } else {
+        return input;
+      }
+    };
 
   </script>
 </html>
