@@ -19,4 +19,4 @@ $ git clone https://github.com/ikt2y/YomiHour
 
 ## License
 
-[MIT](http://b4b4r07.mit-license.org)
+MIT
