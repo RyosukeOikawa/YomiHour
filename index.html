@@ -13,8 +13,10 @@
   <script type="text/javascript">
 
     // APIのインスタンス化
-    window.SpeechRecognition = window.webkitSpeechRecognition;
     const synthesis = new SpeechSynthesisUtterance();
+
+    // API使えなければアラートを表示
+    if (!'SpeechSynthesisUtterance') {alert('Web Speech APIには未対応です.ChromeまたはSafariでお試しください');}
 
     // 日本語に設定
     synthesis.lang = 'ja-JP';
@@ -23,10 +25,8 @@
     function readText() {
       // 読み上げるテキストを設定
       let inputText= document.form.text.value;
-      // 文字列を一文字ずつ取得
-      textArray = inputText.split("");
       // テキストをAPIに渡す
-      synthesis.text = textArray;
+      synthesis.text = inputText;
       // 読みあげる
       speechSynthesis.speak(synthesis);
     }
