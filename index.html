@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>よみあわー</title>
+  </head>
+  <body>
+    <form name="form">
+      <textarea name="text" class="text"rows="5"></textarea><br>
+      <input class="read" type="button" value="読み上げる" onclick="readText();">
+    </form>
+  </body>
+  <script type="text/javascript">
+
+    // APIのインスタンス化
+  	window.SpeechRecognition = window.webkitSpeechRecognition;
+  	const synthesis = new SpeechSynthesisUtterance();
+
+    function readText() {
+      // 読み上げるテキストを設定
+    	const defaultInputText = document.form.text.value;
+    	let inputText= defaultInputText;
+      // テキストをAPIに渡す
+      synthesis.text = makeResponse(inputText);
+  		inputText= defaultInputText;
+      // 読みあげる
+  		speechSynthesis.speak(synthesis);
+    }
+
+  	const makeResponse = (input) => {
+  		if (input.includes('規約')) {
+  			return 'きほどきさだ';
+  		} else {
+  			return input;
+  		}
+  	};
+
+  </script>
+</html>
