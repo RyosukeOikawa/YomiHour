@@ -7,7 +7,7 @@
   <body>
     <form name="form">
       <textarea name="text" class="text"rows="5"></textarea><br>
-      <input class="read" type="button" value="読み上げる" onclick="readText();">
+      <input class="read" type="button" value="読み上げる" onclick="readText();" />
     </form>
   </body>
   <script type="text/javascript">
@@ -16,22 +16,22 @@
     window.SpeechRecognition = window.webkitSpeechRecognition;
     const synthesis = new SpeechSynthesisUtterance();
 
+    // 読み上げる関数
     function readText() {
       // 読み上げるテキストを設定
       let inputText= document.form.text.value;
-      // テキストをAPIに渡す
-      synthesis.text = makeResponse(inputText);
-      // 読みあげる
-      speechSynthesis.speak(synthesis);
-    }
-
-    const makeResponse = (input) => {
-      if (input.includes('規約')) {
-        return 'きほどきさだ';
-      } else {
-        return input;
+      // 文字列を一文字ずつ取得
+      textArray = inputText.split("");
+      // 一文字ずつ読み上げる
+      for (var i = 0; i < textArray.length; i++) {
+        // 文字の設定
+        var tempText =textArray[i];
+        // テキストをAPIに渡す
+        synthesis.text = tempText;
+        // 読みあげる
+        speechSynthesis.speak(synthesis);
       }
-    };
+    }
 
   </script>
 </html>
