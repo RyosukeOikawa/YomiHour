@@ -3,32 +3,60 @@
   <head>
     <meta charset="utf-8">
     <title>よみあわー</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   </head>
   <body>
     <form name="form">
-      <textarea name="text" class="text"rows="5"></textarea><br>
-      <input class="read" type="button" value="読み上げる" onclick="readText();" />
+      <textarea id="text" name="text" rows="5"></textarea><br>
+      <input id="btn" type="button" value="読み上げる" onClick="convertYomi()">
     </form>
   </body>
-  <script type="text/javascript">
+  <script type=text/javascript>
 
-    // APIのインスタンス化
-    const synthesis = new SpeechSynthesisUtterance();
+    // 連想配列を仮定義
+    var kanjiDB = [
+      {  "kanji" : "地",  "yomi" : "じめんのじ"},
+      {  "kanji" : "方",  "yomi" : "ほうがくのほう"},
+      {  "kanji" : "自",  "yomi" : "じぶんのじ"},
+      {  "kanji" : "治",  "yomi" : "とうちのち"},
+    ];
 
-    // API使えなければアラートを表示
-    if (!'SpeechSynthesisUtterance') {alert('Web Speech APIには未対応です.ChromeまたはSafariでお試しください');}
+    // テキストを音読みに変換
+    function convertYomi(){
+      // 入力されたテキストを取得する
+      var law = document.getElementById("text").value
+      // 一文字ずつ分割
+      var lawArray = law.split('');
 
-    // 日本語に設定
-    synthesis.lang = 'ja-JP';
+      // 読みに変換
+      for (var i=0; i<lawArray.length; i++){
+        // テキストを1文字ずつ照合し読みを取得
+      $.grep(kanjiDB,
+        function(item, index) {
+          if (item.kanji == lawArray[i]) {
+            // 読み上げる
+            readText(item.yomi);
+          }
+        })
+      }
+    };
 
-    // 読み上げる関数
-    function readText() {
-      // 読み上げるテキストを設定
-      let inputText= document.form.text.value;
-      // テキストをAPIに渡す
-      synthesis.text = inputText;
-      // 読みあげる
-      speechSynthesis.speak(synthesis);
+    // 読みあげる
+    function readText(yomiageText){
+      // 読み上げAPIのインスタンス化
+      var msg = new SpeechSynthesisUtterance();
+      var voices = window.speechSynthesis.getVoices();
+
+      // APIの音声設定
+      msg.voice = voices[7];
+      msg.volume = 1.0; // 音量
+      msg.rate = 0.1;   // 速度
+      msg.pitch = 1.0;　// 音程 min 0 ~ max 2
+      msg.lang = 'ja-JP';　
+
+      // 読み上げる
+      msg.text = yomiageText;
+      speechSynthesis.speak(msg);
     }
 
   </script>
