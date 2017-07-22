@@ -25,20 +25,30 @@
     function convertYomi(){
       // 入力されたテキストを取得する
       var law = document.getElementById("text").value
-      // 一文字ずつ分割
-      var lawArray = law.split('');
-
+      // 読み上げるための文字列を定義
+      var yomiageText = '';
       // 読みに変換
-      for (var i=0; i<lawArray.length; i++){
-        // テキストを1文字ずつ照合し読みを取得
-      $.grep(kanjiDB,
-        function(item, index) {
-          if (item.kanji == lawArray[i]) {
-            // 読み上げる
-            readText(item.yomi);
-          }
-        })
+      for (var i=0; i<law.length; i++){
+        // unicodeを取得
+        var unicode = law.charCodeAt(i);
+        // 漢字の場合
+        if((unicode>=0x4e00 && unicode<=0x9fcf) || (unicode>=0x3400 && unicode<=0x4dbf) || (unicode>=0x20000 && unicode<=0x2a6df) || (unicode>=0xf900 && unicode<=0xfadf) || (unicode>=0x2f800 && unicode<=0x2fa1f))　{
+          // 漢字DBから入力値の漢字と一致する読みを取得
+          $.grep(kanjiDB,
+            function(item, index) {
+              if (item.kanji == law.charAt(i)) {
+                // yomiageTextに追加
+                yomiageText += item.yomi;
+              }
+            }
+          )
+        // 漢字でない場合
+        } else {
+          // yomiageTextに追加
+          yomiageText += law.charAt(i);
+        }
       }
+      readText(yomiageText);
     };
 
     // 読みあげる
@@ -46,14 +56,12 @@
       // 読み上げAPIのインスタンス化
       var msg = new SpeechSynthesisUtterance();
       var voices = window.speechSynthesis.getVoices();
-
       // APIの音声設定
       msg.voice = voices[7];
       msg.volume = 1.0; // 音量
       msg.rate = 0.1;   // 速度
       msg.pitch = 1.0;　// 音程 min 0 ~ max 2
-      msg.lang = 'ja-JP';　
-
+      msg.lang = 'ja-JP';　// 日本語
       // 読み上げる
       msg.text = yomiageText;
       speechSynthesis.speak(msg);
