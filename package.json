@@ -1,0 +1,30 @@
+{
+  "name": "YomiHour",
+  "version": "1.0.0",
+  "description": "入力した文字を音読みで読み上げてくれるアプリ",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ikt2y/YomiHour.git"
+  },
+  "keywords": [
+    "読み合わせ",
+    "YomiHour"
+  ],
+  "author": "Tatsuya Ikeda",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ikt2y/YomiHour/issues"
+  },
+  "homepage": "https://github.com/ikt2y/YomiHour#readme",
+  "devDependencies": {
+    "browser-sync": "^2.18.13",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^4.0.0",
+    "gulp-clean-css": "^3.7.0",
+    "gulp-uglify": "^3.0.0"
+  }
+}
